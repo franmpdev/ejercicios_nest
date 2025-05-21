@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
-  Put
+  Put,
+  Res
 } from '@nestjs/common';
 import { CuentasService } from 'src/services/cuentas.service';
 import { Cuenta } from 'src/model/Cuenta';
+import { Response } from 'express';
 
 
 @Controller('cuentas')
@@ -22,8 +24,17 @@ export class CuentasController {
     return this.cuentaService.findAll();	
   }
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cuentaService.findOne(id);
+  findOne(@Param('id') id: string, @Res() res: Response):any {
+    const cuenta = this.cuentaService.findOne(id);
+    if(cuenta){
+      return res.status(200).json(cuenta);
+    }
+    else{
+      return res.status(499).json(
+      {
+        message: 'Cuenta no encontrada'
+      });
+    }
   }
   @Post('create')
   create(@Body() cuenta: Cuenta):Cuenta[] | Error {
