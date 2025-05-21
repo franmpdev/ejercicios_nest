@@ -9,7 +9,7 @@ import {
   Put,
   Res
 } from '@nestjs/common';
-import { CuentasService } from 'src/services/cuentas.service';
+import { CuentasService } from 'src/service/cuentas.service';
 import { Cuenta } from 'src/model/Cuenta';
 import { Response } from 'express';
 
@@ -24,7 +24,7 @@ export class CuentasController {
     return this.cuentaService.findAll();	
   }
   @Get(':id')
-  findOne(@Param('id') id: string, @Res() res: Response):any {
+  findOne(@Param('id') id: string, @Res() res: Response):Response {
     const cuenta = this.cuentaService.findOne(id);
     if(cuenta){
       return res.status(200).json(cuenta);
