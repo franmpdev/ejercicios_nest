@@ -50,8 +50,8 @@ export class AuthController {
     }
   @Put('update/:email')
   update(@Param('email') email: string, @Body() user: User, @Res() res: Response): Response {
-    const usuario: User = this.authService.update(email, user);
-    if (usuario) {
+    const usuario: User | Error = this.authService.update(email, user);
+    if (usuario instanceof User) {
       return res.status(200).json({
         message: 'Usuario actualizado',
         user: usuario,
@@ -64,12 +64,36 @@ export class AuthController {
   }
 
   @Patch('updateField/:email')
-    updateField(@Param('email') email: string, @Body() newProperty:Partial<User>){
-      return this.authService.updateField(email, newProperty);
+    updateField(@Param('email') email: string, @Body() newProperty:Partial<User>, @Res() res: Response): Response {
+      
+      const respuesta: User | Error = this.authService.updateField(email, newProperty);
+      if(respuesta instanceof Error){
+        return res.status(404).json(
+          { 
+          message: 'El usuario no existe',
+          });
+      }
+      else{
+        return res.status(200).json(
+          { 
+            message: 'Usuario actualizado',
+            user: respuesta,
+          });
+      }
     }
 
-  @Delete('delete/:id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Delete('delete/:email')
+  remove(@Param('email') email: string, @Res() res: Response): Response {
+    const respuesta = this.authService.remove(email);
+    if (respuesta instanceof Error) {
+      return res.status(404).json({
+        message: 'El usuario no existe',
+      });
+    } else {
+      return res.status(200).json({
+        message: 'Usuario eliminado',
+        user: respuesta,
+      });
+    }
   }
 }

@@ -23,18 +23,27 @@ export class AuthService {
   }
 
   findOne(email: string, password: string):User | Error {
-    return this.users.find(
+    const usuario = this.users.find(
       (user) => user.email === email && user.password === password,
     );
+    if(usuario){
+      return usuario;
+    }
+    else{
+      return new Error('Cuenta no encontrada');
+    }
   }
 
-  update(email: string, user: User) {
+  update(email: string, user: User):User | Error {
     
     const userIndex = this.users.findIndex((user) => user.email === email);
     if (userIndex !== -1) {
-      return this.users[userIndex] = { ...this.users[userIndex], ...user };
+      this.users[userIndex] = { ...this.users[userIndex], ...user };
+      return this.users[userIndex];
     }
-    return this.users[userIndex];
+    else {
+      return new Error('El usuario no existe');
+    }
   }
   updateField(email: string, newProperty: Partial<User>):User | Error {
     
@@ -43,9 +52,17 @@ export class AuthService {
       this.users[userIndex] = { ...this.users[userIndex], ...newProperty };
       return this.users[userIndex];
     }
+    else {
+      return new Error('El usuario no existe');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #id auth`+id;
+  remove(email: string): User | Error {
+    const userIndex = this.users.findIndex((user) => user.email === email);
+    if (userIndex !== -1) {
+      this.users.splice(userIndex, 1);
+      return this.users[userIndex];
+    }
+    return new Error('El usuario no existe');
   }
 }
