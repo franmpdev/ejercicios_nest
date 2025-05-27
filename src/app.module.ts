@@ -12,11 +12,11 @@ import { User } from './model/User';
         type: 'mysql',
         host: 'localhost',
         port: 3306,
-        username: 'franmp',
+        username: 'root',
         password: '30092001',
         database: 'db_peluqueria',
         entities: [User],
-        synchronize: true,
+        synchronize: false,
     }),
     TypeOrmModule.forFeature([User,]),
     

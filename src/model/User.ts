@@ -1,22 +1,19 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 @Entity('users')
 export class User {
-  @PrimaryColumn()
-  id: string;
+  @PrimaryColumn({unique: true})
+  dni: string;
   @Column()
   name: string;
   @Column({ unique: true })
   email: string;
   @Column()
   password: string;
-  @Column()
-  role: string;
 
-  constructor(id: string, name: string, email: string, password: string, role: string) {
-    this.id = id;
+  constructor(dni: string, name: string, email: string, password: string) {
+    this.dni = dni;
     this.name = name;
     this.email = email;
     this.password = password;
-    this.role = role;
   }
 }

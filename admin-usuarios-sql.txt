@@ -7,24 +7,23 @@ GRANT ALL PRIVILEGES ON db_peluqueria.* TO 'franmp'@'localhost';
 -- Tabla USERS (ID es el DNI)
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-  id VARCHAR(20) NOT NULL PRIMARY KEY,
+  dni VARCHAR(20) NOT NULL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
-  password VARCHAR(100) NOT NULL,
-  role VARCHAR(50) NOT NULL
+  password VARCHAR(100) NOT NULL
 );
 
-INSERT INTO users (id, name, email, password, role) VALUES
-('06296212P', 'Fran Moreno', 'franmorenopecofmp@gmail.com', '30092001', 'admin'),
-('12345678A', 'Ana López', 'ana.lopez@email.com', 'ana123', 'user'),
-('23456789B', 'Carlos Pérez', 'carlos.perez@email.com', 'carlos456', 'user'),
-('34567890C', 'Lucía Gómez', 'lucia.gomez@email.com', 'lucia789', 'user'),
-('45678901D', 'Miguel Torres', 'miguel.torres@email.com', 'miguel321', 'user'),
-('56789012E', 'Sofía Ruiz', 'sofia.ruiz@email.com', 'sofia654', 'user'),
-('67890123F', 'David Fernández', 'david.fernandez@email.com', 'david987', 'user'),
-('78901234G', 'Elena Sánchez', 'elena.sanchez@email.com', 'elena111', 'user'),
-('89012345H', 'Javier Romero', 'javier.romero@email.com', 'javier222', 'user'),
-('90123456I', 'María Castro', 'maria.castro@email.com', 'maria333', 'user');
+INSERT INTO users (dni, name, email, password) VALUES
+('06296212P', 'Fran Moreno', 'franmorenopecofmp@gmail.com', '30092001'),
+('12345678A', 'Ana López', 'ana.lopez@email.com', 'ana123'),
+('23456789B', 'Carlos Pérez', 'carlos.perez@email.com', 'carlos456'),
+('34567890C', 'Lucía Gómez', 'lucia.gomez@email.com', 'lucia789'),
+('45678901D', 'Miguel Torres', 'miguel.torres@email.com', 'miguel321'),
+('56789012E', 'Sofía Ruiz', 'sofia.ruiz@email.com', 'sofia654'),
+('67890123F', 'David Fernández', 'david.fernandez@email.com', 'david987'),
+('78901234G', 'Elena Sánchez', 'elena.sanchez@email.com', 'elena111'),
+('89012345H', 'Javier Romero', 'javier.romero@email.com', 'javier222'),
+('90123456I', 'María Castro', 'maria.castro@email.com', 'maria333');
 
 -- Tabla MASCOTAS
 CREATE TABLE mascotas (

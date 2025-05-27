@@ -10,7 +10,11 @@ export class AuthService {
     @InjectRepository(User)
     private userRepository: Repository<User>
   ){}
+
   async create(user: User): Promise<boolean> {
+    if (!user.dni || user.dni.trim() === '') {
+    return true;
+  }
     const usuarioRepetido = await this.userRepository.findOneBy({ email: user.email });
     if (usuarioRepetido) {
       return true;
