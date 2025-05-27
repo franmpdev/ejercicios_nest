@@ -1,0 +1,94 @@
+Comando para crear el usuario y darle persisos en una determinada base de datos: 
+
+CREATE USER 'franmp'@'localhost' IDENTIFIED WITH mysql_native_password BY '30092001';
+GRANT ALL PRIVILEGES ON db_peluqueria.* TO 'franmp'@'localhost';
+
+
+-- Tabla USERS (ID es el DNI)
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id VARCHAR(20) NOT NULL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(100) NOT NULL,
+  role VARCHAR(50) NOT NULL
+);
+
+INSERT INTO users (id, name, email, password, role) VALUES
+('06296212P', 'Fran Moreno', 'franmorenopecofmp@gmail.com', '30092001', 'admin'),
+('12345678A', 'Ana López', 'ana.lopez@email.com', 'ana123', 'user'),
+('23456789B', 'Carlos Pérez', 'carlos.perez@email.com', 'carlos456', 'user'),
+('34567890C', 'Lucía Gómez', 'lucia.gomez@email.com', 'lucia789', 'user'),
+('45678901D', 'Miguel Torres', 'miguel.torres@email.com', 'miguel321', 'user'),
+('56789012E', 'Sofía Ruiz', 'sofia.ruiz@email.com', 'sofia654', 'user'),
+('67890123F', 'David Fernández', 'david.fernandez@email.com', 'david987', 'user'),
+('78901234G', 'Elena Sánchez', 'elena.sanchez@email.com', 'elena111', 'user'),
+('89012345H', 'Javier Romero', 'javier.romero@email.com', 'javier222', 'user'),
+('90123456I', 'María Castro', 'maria.castro@email.com', 'maria333', 'user');
+
+-- Tabla MASCOTAS
+CREATE TABLE mascotas (
+  id VARCHAR(20) NOT NULL PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  especie VARCHAR(50) NOT NULL,
+  raza VARCHAR(50),
+  edad INT,
+  dni_dueno VARCHAR(20) NOT NULL
+);
+
+INSERT INTO mascotas (id, nombre, especie, raza, edad, dni_dueno) VALUES
+('M001', 'Rocky', 'Perro', 'Labrador', 5, '12345678A'),
+('M002', 'Misu', 'Gato', 'Siamés', 3, '23456789B'),
+('M003', 'Toby', 'Perro', 'Bulldog', 2, '34567890C'),
+('M004', 'Luna', 'Gato', 'Persa', 4, '45678901D'),
+('M005', 'Max', 'Perro', 'Pastor Alemán', 6, '56789012E'),
+('M006', 'Nala', 'Gato', 'Maine Coon', 1, '67890123F'),
+('M007', 'Coco', 'Perro', 'Beagle', 7, '78901234G'),
+('M008', 'Simba', 'Gato', 'Bengalí', 2, '89012345H'),
+('M009', 'Thor', 'Perro', 'Golden Retriever', 3, '90123456I'),
+('M010', 'Kiara', 'Gato', 'Angora', 5, '06296212P');
+
+-- Tabla EMPLEADOS
+CREATE TABLE empleados (
+  id VARCHAR(20) NOT NULL PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  apellido VARCHAR(100) NOT NULL,
+  puesto VARCHAR(50) NOT NULL,
+  telefono VARCHAR(20)
+);
+
+INSERT INTO empleados (id, nombre, apellido, puesto, telefono) VALUES
+('E001', 'Laura', 'García', 'Veterinaria', '600111222'),
+('E002', 'Pedro', 'Martínez', 'Peluquero', '600222333'),
+('E003', 'Sara', 'López', 'Veterinaria', '600333444'),
+('E004', 'Juan', 'Sánchez', 'Peluquero', '600444555'),
+('E005', 'Marta', 'Díaz', 'Recepcionista', '600555666'),
+('E006', 'Luis', 'Fernández', 'Veterinario', '600666777'),
+('E007', 'Ana', 'Ruiz', 'Peluquera', '600777888'),
+('E008', 'Carlos', 'Moreno', 'Veterinario', '600888999'),
+('E009', 'Elena', 'Jiménez', 'Recepcionista', '600999000'),
+('E010', 'Jorge', 'Castro', 'Peluquero', '601000111');
+
+-- Tabla CITAS
+CREATE TABLE citas (
+  id VARCHAR(20) NOT NULL PRIMARY KEY,
+  dni_usuario VARCHAR(20) NOT NULL,
+  id_mascota VARCHAR(20),
+  id_empleado VARCHAR(20) NOT NULL,
+  fecha DATE NOT NULL,
+  hora TIME NOT NULL
+);
+
+INSERT INTO citas (id, dni_usuario, id_mascota, id_empleado, fecha, hora) VALUES
+('C001', '06296212P', 'M010', 'E001', '2024-06-01', '10:00:00'),
+('C002', '12345678A', 'M001', 'E002', '2024-06-02', '11:00:00'),
+('C003', '23456789B', 'M002', 'E003', '2024-06-03', '12:00:00'),
+('C004', '34567890C', 'M003', 'E004', '2024-06-04', '13:00:00'),
+('C005', '45678901D', 'M004', 'E005', '2024-06-05', '14:00:00'),
+('C006', '56789012E', 'M005', 'E006', '2024-06-06', '15:00:00'),
+('C007', '67890123F', 'M006', 'E007', '2024-06-07', '16:00:00'),
+('C008', '78901234G', 'M007', 'E008', '2024-06-08', '17:00:00'),
+('C009', '89012345H', 'M008', 'E009', '2024-06-09', '18:00:00'),
+('C010', '90123456I', 'M009', 'E010', '2024-06-10', '19:00:00');
+
+
