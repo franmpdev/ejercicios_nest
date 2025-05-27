@@ -18,10 +18,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('create')
-    create(@Body() user: User, @Res() res: Response):Response{
-        const respuesta = this.authService.create(user);
-        if(respuesta instanceof Error){
-          return res.status(499).json(
+    async create(@Body() user: User, @Res() res: Response):Promise<Response> {
+        const usuariorepetido = await this.authService.create(user);
+        if(usuariorepetido){
+            return res.status(499).json(
             {
               message: 'El usuario ya existe',
             });
@@ -29,15 +29,14 @@ export class AuthController {
         else{
           return res.status(201).json(
             {
-              message: 'Usuario creado',
-              user: respuesta,
+              message: 'Usuario creado'
             });
         }
     }
 
   @Get(':email,:password')
-    findOne(@Param('email') email: string, @Param('password') password: string, @Res() res: Response):Response {
-      const user = this.authService.findOne(email, password);
+    async findOne(@Param('email') email: string, @Param('password') password: string, @Res() res: Response):Promise<Response> {
+      const user = await this.authService.findOne(email, password);
       if(user){
         return res.status(200).json(user);
       }
@@ -49,8 +48,8 @@ export class AuthController {
     }
     }
   @Put('update/:email')
-  update(@Param('email') email: string, @Body() user: User, @Res() res: Response): Response {
-    const usuario: User | Error = this.authService.update(email, user);
+  async update(@Param('email') email: string, @Body() user: User, @Res() res: Response): Promise<Response> {
+    const usuario: User | Error = await this.authService.update(email, user);
     if (usuario instanceof User) {
       return res.status(200).json({
         message: 'Usuario actualizado',
@@ -64,9 +63,9 @@ export class AuthController {
   }
 
   @Patch('updateField/:email')
-    updateField(@Param('email') email: string, @Body() newProperty:Partial<User>, @Res() res: Response): Response {
+    async updateField(@Param('email') email: string, @Body() newProperty:Partial<User>, @Res() res: Response): Promise<Response> {
       
-      const respuesta: User | Error = this.authService.updateField(email, newProperty);
+      const respuesta: User | Error =await this.authService.updateField(email, newProperty);
       if(respuesta instanceof Error){
         return res.status(404).json(
           { 
@@ -83,8 +82,9 @@ export class AuthController {
     }
 
   @Delete('delete/:email')
-  remove(@Param('email') email: string, @Res() res: Response): Response {
-    const respuesta = this.authService.remove(email);
+  @Delete('delete/:email')
+  async remove(@Param('email') email: string, @Res() res: Response): Promise<Response> {
+    const respuesta = await this.authService.remove(email);
     if (respuesta instanceof Error) {
       return res.status(404).json({
         message: 'El usuario no existe',
